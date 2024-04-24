@@ -13,7 +13,7 @@ public class slime_admin : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        objetivo = GameObject.Find("player").GetComponent<Transform>();
     }
 
     // Update is called once per frame

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class RespawnManager : MonoBehaviour
 {
-    public GameObject enemyPrefab; // Prefab del enemigo que deseas respawnear
+    public GameObject enemyPrefab; // Prefab del enemigo que respawnea
     public Transform[] spawnPoints; // Puntos de spawn de los enemigos
 
     public float respawnTime = 3f; // Tiempo de respawn en segundos
@@ -30,6 +30,7 @@ public class RespawnManager : MonoBehaviour
 
             // Instancia un nuevo enemigo en el punto de spawn
             Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+           
         }
     }
 }
