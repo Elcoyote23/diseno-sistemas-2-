@@ -6,17 +6,17 @@ public class CollisionController : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "slime")
+        if (collision.gameObject.name == "Slime")
             Debug.Log("enter");
     }
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.name == "slime")
+        if (collision.gameObject.name == "Slime")
             Debug.Log("stay");
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.name == "slime")
+        if (collision.gameObject.name == "Slime")
             Debug.Log("exit");
     }
 }
