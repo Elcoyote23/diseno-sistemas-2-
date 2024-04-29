@@ -333,7 +333,7 @@ GameObject:
   - component: {fileID: 730568701}
   - component: {fileID: 730568702}
   - component: {fileID: 730568703}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: swordcolider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -384,7 +384,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -936,7 +936,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 2
-      m_TileSpriteIndex: 8
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1195,8 +1195,8 @@ Tilemap:
     m_Data: {fileID: 1234582907, guid: a01277a2543a9344b85ced5a74ca7133, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 347482984, guid: a01277a2543a9344b85ced5a74ca7133, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -587390823, guid: a01277a2543a9344b85ced5a74ca7133, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 5
     m_Data: {fileID: 606433641, guid: 4d52811a652f69c49bdae16142896f5a, type: 3}
   - m_RefCount: 0
@@ -1209,8 +1209,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -587390823, guid: a01277a2543a9344b85ced5a74ca7133, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1389449456, guid: a01277a2543a9344b85ced5a74ca7133, type: 3}
   m_TileMatrixArray:
@@ -2137,6 +2137,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 978798795729736780, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_Size.x
+      value: 0.11472773
+      objectReference: {fileID: 0}
+    - target: {fileID: 978798795729736780, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_Size.y
+      value: 0.031830177
+      objectReference: {fileID: 0}
+    - target: {fileID: 978798795729736780, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.000023979694
+      objectReference: {fileID: 0}
+    - target: {fileID: 978798795729736780, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.0691782
+      objectReference: {fileID: 0}
+    - target: {fileID: 978798795729736780, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4076466146976896485, guid: f1c981b12a179564199113c3778d9570, type: 3}
       propertyPath: m_SortingOrder
       value: 3
@@ -2149,9 +2169,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: player
       objectReference: {fileID: 0}
+    - target: {fileID: 6088946639655190452, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7126355846603225649, guid: f1c981b12a179564199113c3778d9570, type: 3}
       propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7126355846603225649, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_Simulated
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7126355846603225649, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
