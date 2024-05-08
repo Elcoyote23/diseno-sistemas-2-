@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
 
     Animator animator;
+    public int slimeDamage = 10;
     public float Health
     {
         set

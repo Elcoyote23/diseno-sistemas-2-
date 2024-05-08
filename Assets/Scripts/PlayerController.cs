@@ -24,13 +24,34 @@ public class PlayerController : MonoBehaviour
     List<RaycastHit2D> castCollsions = new List<RaycastHit2D>();
 
     bool canMove = true;
+
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthBar healthBar;
+    public Enemy Enemy;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy") 
+        {
+            TakeDamage(10); ///deberia cambiar cantidad de daño por el daño del enemy
+            Debug.Log("daño");
+        }
+    }
+    void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+    }
    
     private void FixedUpdate()
     {
@@ -124,4 +145,7 @@ public class PlayerController : MonoBehaviour
     {
         canMove = true;
     }
+    //
+
+
 }
