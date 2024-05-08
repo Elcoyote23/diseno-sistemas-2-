@@ -43,8 +43,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy") 
         {
-            TakeDamage(10); ///deberia cambiar cantidad de daño por el daño del enemy
-            Debug.Log("daño");
+            Debug.Log("10 de daño");
+            TakeDamage(Enemy.slimeDamage); ///deberia cambiar cantidad de daño por el daño del enemy
         }
     }
     void TakeDamage(int damage)
