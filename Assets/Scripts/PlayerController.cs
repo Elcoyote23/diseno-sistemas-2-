@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
-
+   
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Enemy") 
@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
     }
+
    
     private void FixedUpdate()
     {
@@ -145,7 +146,7 @@ public class PlayerController : MonoBehaviour
     {
         canMove = true;
     }
-    //
+
 
 
 }
