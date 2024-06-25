@@ -199,5 +199,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetivo: {fileID: 826186039822494921, guid: f1c981b12a179564199113c3778d9570, type: 3}
   speed: 0.5
-  debePerseguir: 1
+  debePerseguir: 0
   distancia: 0

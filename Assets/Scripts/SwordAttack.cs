@@ -7,7 +7,7 @@ public class SwordAttack : MonoBehaviour
 
 
 
-    public float damage = 3;
+    public float damage = 0;
     Vector2 rightAttackOffSet;
 
      public Collider2D swordCollider;

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
+   
     Animator animator;
     public float Health
+    
+    
     {
         set
         {
@@ -31,6 +33,8 @@ public class Enemy : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
+
+   
 
     public void Defeated()
     {

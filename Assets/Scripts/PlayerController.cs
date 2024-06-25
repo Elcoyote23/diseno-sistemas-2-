@@ -5,13 +5,24 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 1f;
+    public float Speed = 1f;
 
     public float collisionOffset = 0.05f;
+
+    public float damage = 10f;
 
     public ContactFilter2D movementFilter;
 
     public SwordAttack swordAttack;
+    public float health = 100.0f;
+
+   
+    private void Die()
+    {
+        // Manejar la muerte del jugador (reiniciar nivel, mostrar pantalla de muerte, etc.)
+        Debug.Log("Player died!");
+        // Puedes añadir más lógica aquí, como reiniciar el nivel o mostrar una pantalla de fin de juego.
+    }
 
     Vector2 movementInput;
 
@@ -75,10 +86,10 @@ public class PlayerController : MonoBehaviour
         direction,
         movementFilter,
         castCollsions,
-        moveSpeed * Time.fixedDeltaTime + collisionOffset);
+        Speed * Time.fixedDeltaTime + collisionOffset);
 
         
-            rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
             return true;
         
     }
@@ -123,5 +134,15 @@ public class PlayerController : MonoBehaviour
     public void UnlockMovement()
     {
         canMove = true;
+    }
+
+    public void IncreaseSpeed(float amount)
+    {
+        Speed += amount;
+    }
+
+    public void IncreaseDamage(float amount)
+    {
+        damage += amount;
     }
 }
