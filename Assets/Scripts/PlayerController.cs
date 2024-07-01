@@ -15,14 +15,8 @@ public class PlayerController : MonoBehaviour
 
     public SwordAttack swordAttack;
     public float health = 100.0f;
+    public HealthBar healthBar;
 
-   
-    private void Die()
-    {
-        // Manejar la muerte del jugador (reiniciar nivel, mostrar pantalla de muerte, etc.)
-        Debug.Log("Player died!");
-        // Puedes añadir más lógica aquí, como reiniciar el nivel o mostrar una pantalla de fin de juego.
-    }
 
     Vector2 movementInput;
 
@@ -35,6 +29,42 @@ public class PlayerController : MonoBehaviour
     List<RaycastHit2D> castCollsions = new List<RaycastHit2D>();
 
     bool canMove = true;
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Trigger detected with: " + other.gameObject.name);
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                Debug.Log("Enemy detected: " + enemy.name);
+                enemy.Attack(this);
+            }
+        }
+    }
+
+
+    public void TakeDamage(float damage)
+    {
+        Debug.Log("TakeDamage called with damage: " + damage);
+        health -= damage;
+        if (health <= 0)
+        {
+            health = 0;
+            Die();
+        }
+        healthBar.SetHealth(health / 100.0f); // Asumiendo que la salud máxima es 100
+    }
+
+
+
+    private void Die()
+    {
+        Debug.Log("Player died!");
+        // Manejar la muerte del jugador (reiniciar nivel, mostrar pantalla de muerte, etc.)
+        // Puedes añadir más lógica aquí, como reiniciar el nivel o mostrar una pantalla de fin de juego.
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();

@@ -6,6 +6,11 @@ public class Enemy : MonoBehaviour
 {
    
     Animator animator;
+    public void Attack(PlayerController player)
+    {
+        player.TakeDamage(10); // Inflige 10 puntos de daño
+    }
+
     public float Health
     
     
