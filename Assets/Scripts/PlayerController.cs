@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public float Speed = 1f;
-
     public float collisionOffset = 0.05f;
-
     public float damage = 10f;
-
+    public GameObject defeatPanel; // Referencia al panel de derrota
+    public HordeManager hordeManager; // Referencia al HordeManager
     public ContactFilter2D movementFilter;
-
     public SwordAttack swordAttack;
-    public float health = 100.0f;
+    public float health;
     public HealthBar healthBar;
+    public float initialHealth = 100f;
 
 
     Vector2 movementInput;
@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
             if (enemy != null)
             {
                 Debug.Log("Enemy detected: " + enemy.name);
-                enemy.Attack(this);
+
             }
         }
     }
@@ -48,23 +48,18 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         Debug.Log("TakeDamage called with damage: " + damage);
-        health -= damage;
-        if (health <= 0)
+        initialHealth -= damage;
+        if (initialHealth <= 0)
         {
-            health = 0;
+            initialHealth = 0;
             Die();
         }
-        healthBar.SetHealth(health / 100.0f); // Asumiendo que la salud máxima es 100
+        healthBar.SetHealth(initialHealth / 100.0f); // Asumiendo que la salud máxima es 100
     }
 
 
 
-    private void Die()
-    {
-        Debug.Log("Player died!");
-        // Manejar la muerte del jugador (reiniciar nivel, mostrar pantalla de muerte, etc.)
-        // Puedes añadir más lógica aquí, como reiniciar el nivel o mostrar una pantalla de fin de juego.
-    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -72,41 +67,48 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-   
+
     private void FixedUpdate()
     {
-        if (canMove) { 
-        if (movementInput != Vector2.zero)
+        if (canMove)
         {
-            bool success = TryMove(movementInput);
-
-            if (!success)
+            if (movementInput != Vector2.zero)
             {
-                success = TryMove(new Vector2(movementInput.x, 0));
+                bool success = TryMove(movementInput);
 
                 if (!success)
                 {
-                    success = TryMove(new Vector2(0, movementInput.y));
-                }
-            }
+                    success = TryMove(new Vector2(movementInput.x, 0));
 
-            animator.SetBool("isMoving", success);
-        }
-        else
+                    if (!success)
+                    {
+                        success = TryMove(new Vector2(0, movementInput.y));
+                    }
+                }
+
+                animator.SetBool("isMoving", success);
+            }
+            else
             {
                 animator.SetBool("isMoving", false);
             }
 
-        if (movementInput.x < 0)
-        {
-            spriteRenderer.flipX = true;
-            
-        }else if ( movementInput.x > 0)
-        {
-            spriteRenderer.flipX = false;
-           
+            if (movementInput.x < 0)
+            {
+                spriteRenderer.flipX = true;
+
+            }
+            else if (movementInput.x > 0)
+            {
+                spriteRenderer.flipX = false;
+
+            }
+
         }
 
+        if (initialHealth <= 0)
+        {
+            Die();
         }
     }
 
@@ -118,13 +120,13 @@ public class PlayerController : MonoBehaviour
         castCollsions,
         Speed * Time.fixedDeltaTime + collisionOffset);
 
-        
-            rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
-            return true;
-        
+
+        rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
+        return true;
+
     }
 
-    void OnMove (InputValue movementValue)
+    void OnMove(InputValue movementValue)
     {
         movementInput = movementValue.Get<Vector2>();
     }
@@ -137,7 +139,7 @@ public class PlayerController : MonoBehaviour
     public void SwordAttack()
     {
         LockMovement();
-        if (spriteRenderer.flipX== true)
+        if (spriteRenderer.flipX == true)
         {
             swordAttack.AttackLeft();
         }
@@ -145,9 +147,9 @@ public class PlayerController : MonoBehaviour
         {
             swordAttack.AttackRight();
         }
-        
-        
-        
+
+
+
     }
 
     public void EndSwordAttack()
@@ -174,5 +176,33 @@ public class PlayerController : MonoBehaviour
     public void IncreaseDamage(float amount)
     {
         damage += amount;
+    }
+
+    public void IncreaseHealth(int amount)
+    {
+        initialHealth += amount;
+        if (health > initialHealth) // Si quieres un límite máximo de salud
+        {
+            health = initialHealth;
+        }
+    }
+
+
+
+    private void Die()
+    {
+        // Mostrar la pantalla de derrota
+        defeatPanel.SetActive(true);
+        // Detener el juego o reiniciar las hordas
+        hordeManager.ResetHordes();
+    }
+
+    public void RestartGame()
+    {
+        initialHealth = 100; // Restablecer la salud
+        Speed = 1.0f; // Restablecer la velocidad
+        damage = 10.0f; // Restablecer el daño
+        defeatPanel.SetActive(false); // Ocultar la pantalla de derrota
+        hordeManager.RestartHordeCoroutine();
     }
 }

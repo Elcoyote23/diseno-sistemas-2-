@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Enemy : MonoBehaviour
 {
-   
+
     Animator animator;
     public void Attack(PlayerController player)
     {
-        player.TakeDamage(10); // Inflige 10 puntos de daño
+        player.TakeDamage(5); // Inflige 10 puntos de daño
     }
 
     public float Health
-    
-    
+
+
     {
         set
         {
@@ -24,12 +25,13 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        get {
-                return health;
-            }
-            
-            
-        
+        get
+        {
+            return health;
+        }
+
+
+
     }
 
     public float health = 1;
@@ -39,7 +41,7 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-   
+
 
     public void Defeated()
     {

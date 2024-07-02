@@ -5,10 +5,13 @@ public class HealthBar : MonoBehaviour
 {
     public Image healthBarFill; // Asegúrate de que esta línea esté presente y sea pública
 
-    public void SetHealth(float healthPercentage)
+    public void SetHealth(float initialHealthPercentage)
     {
-        Debug.Log("SetHealth called with percentage: " + healthPercentage);
-        healthBarFill.fillAmount = healthPercentage;
+        Debug.Log("SetHealth called with percentage: " + initialHealthPercentage);
+        healthBarFill.fillAmount = initialHealthPercentage;
     }
+    
+
+    
 }
 
