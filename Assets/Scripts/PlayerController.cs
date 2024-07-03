@@ -30,21 +30,7 @@ public class PlayerController : MonoBehaviour
 
     bool canMove = true;
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log("Trigger detected with: " + other.gameObject.name);
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            TakeDamage(2);
-            if (enemy != null)
-            {
-                Debug.Log("Enemy detected: " + enemy.name);
-
-
-            }
-        }
-    }
+   
 
 
 
@@ -154,6 +140,22 @@ public class PlayerController : MonoBehaviour
 
 
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Trigger detected with: " + collision.gameObject.name);
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            TakeDamage(2);
+            if (enemy != null)
+            {
+                Debug.Log("Enemy detected: " + enemy.name);
+
+
+            }
+        }
     }
 
     public void EndSwordAttack()
