@@ -645,6 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 4907943723373614736, guid: 1e4ccf3249076f74199f33b97c040a96, type: 3}
+  enemyPrefab2: {fileID: 4907943723373614736, guid: 88e04337123b3d04e85f6f3e0ffd9789, type: 3}
   initialEnemiesPerHorde: 10
   spawnInterval: 0.5
   pauseBetweenHordes: 10
@@ -2432,7 +2433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc390180a99afaf45be0f5e2bda52f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 4907943723373614736, guid: 1e4ccf3249076f74199f33b97c040a96, type: 3}
+  enemyPrefab: {fileID: 4907943723373614736, guid: 88e04337123b3d04e85f6f3e0ffd9789, type: 3}
   spawnPoints:
   - {fileID: 522304137}
   - {fileID: 1174820783}

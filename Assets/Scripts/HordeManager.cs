@@ -5,6 +5,7 @@ using System.Collections;
 public class HordeManager : MonoBehaviour
 {
     public GameObject enemyPrefab; // Prefab del enemigo
+    public GameObject enemyPrefab2; // Prefab del enemigo
     public int initialEnemiesPerHorde = 10; // Cantidad inicial de enemigos por horda
     public float spawnInterval = 1.0f; // Intervalo de tiempo entre spawns
     public float pauseBetweenHordes = 5.0f; // Duración de la pausa entre hordas
@@ -56,6 +57,7 @@ public class HordeManager : MonoBehaviour
     {
         int spawnIndex = Random.Range(0, spawnPoints.Length);
         Instantiate(enemyPrefab, spawnPoints[spawnIndex].position, spawnPoints[spawnIndex].rotation);
+        Instantiate(enemyPrefab2, spawnPoints[spawnIndex].position, spawnPoints[spawnIndex].rotation);
     }
 
     private void ShowSelectionPanel()

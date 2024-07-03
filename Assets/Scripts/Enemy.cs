@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-   
     Animator animator;
+    private slime_admin slimeAdmin;
+
     public void Attack(PlayerController player)
     {
         player.TakeDamage(10); // Inflige 10 puntos de daño
     }
 
     public float Health
-    
-    
     {
         set
         {
@@ -26,10 +25,7 @@ public class Enemy : MonoBehaviour
 
         get {
                 return health;
-            }
-            
-            
-        
+            } 
     }
 
     public float health = 1;
@@ -37,13 +33,16 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        slimeAdmin = GetComponent<slime_admin>();
     }
-
-   
 
     public void Defeated()
     {
         animator.SetTrigger("Defeated");
+        if (slimeAdmin != null)
+        {
+            slimeAdmin.speed = 0;
+        }
     }
 
     public void RemoveEnemy()
