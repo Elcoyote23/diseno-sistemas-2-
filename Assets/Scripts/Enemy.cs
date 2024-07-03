@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     Animator animator;
     public void Attack(PlayerController player)
     {
-        player.TakeDamage(5); // Inflige 10 puntos de daño
+        player.TakeDamage(2); // Inflige 10 puntos de daño
     }
 
     public float Health
@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
             if (health <= 0)
             {
                 Defeated();
+                RemoveEnemy();
             }
         }
 
@@ -46,6 +47,7 @@ public class Enemy : MonoBehaviour
     public void Defeated()
     {
         animator.SetTrigger("Defeated");
+        
     }
 
     public void RemoveEnemy()

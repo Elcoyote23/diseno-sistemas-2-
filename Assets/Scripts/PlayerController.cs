@@ -36,13 +36,17 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            TakeDamage(2);
             if (enemy != null)
             {
                 Debug.Log("Enemy detected: " + enemy.name);
 
+
             }
         }
     }
+
+
 
 
     public void TakeDamage(float damage)

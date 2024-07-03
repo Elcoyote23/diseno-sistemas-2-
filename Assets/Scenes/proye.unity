@@ -1094,7 +1094,7 @@ Transform:
   m_GameObject: {fileID: 730568700}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.19, y: 0, z: 0}
+  m_LocalPosition: {x: 0.167, y: 0, z: 0}
   m_LocalScale: {x: 0.9616, y: 1.0237854, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1231,7 +1231,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 343, y: 205}
+  m_AnchoredPosition: {x: -326, y: 192}
   m_SizeDelta: {x: 200, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &876430114
@@ -1551,7 +1551,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -303.7, y: 200.1}
+  m_AnchoredPosition: {x: 309, y: 190}
   m_SizeDelta: {x: 306.4519, y: 28.2774}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1046785152
@@ -3662,10 +3662,10 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 826186039822494921, guid: f1c981b12a179564199113c3778d9570, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 730568701}
+      addedObject: {fileID: 2077286625}
     - targetCorrespondingSourceObject: {fileID: 826186039822494921, guid: f1c981b12a179564199113c3778d9570, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2077286625}
+      addedObject: {fileID: 730568701}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1c981b12a179564199113c3778d9570, type: 3}
 --- !u!1 &1729435183
@@ -3716,7 +3716,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 343, y: 205}
+  m_AnchoredPosition: {x: -326, y: 192}
   m_SizeDelta: {x: 200, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1729435186
@@ -3732,7 +3732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.1745283, b: 0.1745283, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
