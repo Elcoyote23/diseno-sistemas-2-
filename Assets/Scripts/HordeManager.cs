@@ -2,9 +2,12 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
+
 public class HordeManager : MonoBehaviour
 {
-    public GameObject enemyPrefab; // Prefab del enemigo
+    public GameObject enemyPrefab; // Prefab del enemigo básico
+    public GameObject enemyType2Prefab; // Enemigo que aparece a partir de la horda 3
+    public GameObject enemyType3Prefab; // Enemigo que aparece a partir de la horda 5
     public int initialEnemiesPerHorde = 10; // Cantidad inicial de enemigos por horda
     public float spawnInterval = 1.0f; // Intervalo de tiempo entre spawns
     public float pauseBetweenHordes = 5.0f; // Duración de la pausa entre hordas
@@ -38,10 +41,27 @@ public class HordeManager : MonoBehaviour
 
             yield return new WaitForSeconds(2.0f); // Mostrar el mensaje por 2 segundos
 
-            for (int i = 0; i < enemiesPerHorde; i++)
+            int totalEnemies = enemiesPerHorde;
+            while (totalEnemies > 0)
             {
-                if (!gameRunning) yield break; // Salir de la coroutine si el juego no está en marcha
-                SpawnEnemy(currentSpeed);
+                // Spawn base enemies
+                SpawnEnemy(enemyPrefab);
+                totalEnemies--;
+
+                // Spawn type 2 enemies starting from horde 3
+                if (currentHorde >= 3 && totalEnemies > 0)
+                {
+                    SpawnEnemy(enemyType2Prefab);
+                    totalEnemies--;
+                }
+
+                // Spawn type 3 enemies starting from horde 5
+                if (currentHorde >= 5 && totalEnemies > 0)
+                {
+                    SpawnEnemy(enemyType3Prefab);
+                    totalEnemies--;
+                }
+
                 yield return new WaitForSeconds(spawnInterval);
             }
 
@@ -61,7 +81,7 @@ public class HordeManager : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy(float speed)
+    private void SpawnEnemy(GameObject enemyPrefab)
     {
         int spawnIndex = Random.Range(0, spawnPoints.Length);
         GameObject enemy = Instantiate(enemyPrefab, spawnPoints[spawnIndex].position, spawnPoints[spawnIndex].rotation);
@@ -138,3 +158,4 @@ public class HordeManager : MonoBehaviour
         }
     }
 }
+
