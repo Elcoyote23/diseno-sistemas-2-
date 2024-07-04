@@ -121,7 +121,6 @@ public class PlayerController : MonoBehaviour
 
         // Detener el juego o reiniciar las hordas
         hordeManager.ResetHordes();
-
     }
 
     public void RestartGame()
@@ -165,6 +164,22 @@ public class PlayerController : MonoBehaviour
         swordAttack.StopAttack();
     }
 
+    //public bool TryMove(Vector2 direction)
+    //{
+    //    int count = rb.Cast(
+    //        direction,
+    //        movementFilter,
+    //        castCollisions,
+    //        Speed * Time.fixedDeltaTime + collisionOffset);
+
+    //    if (count == 0) // Verificar si no hay colisiones
+    //    {
+    //        rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
+    //        return true;
+    //    }
+    //    return false;
+    //}
+
     public bool TryMove(Vector2 direction)
     {
         int count = rb.Cast(
@@ -173,16 +188,41 @@ public class PlayerController : MonoBehaviour
             castCollisions,
             Speed * Time.fixedDeltaTime + collisionOffset);
 
-        rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
-        return true;
+        bool canMove = true;
+
+        foreach (var hit in castCollisions)
+        {
+            if (hit.collider.CompareTag("Wall"))
+            {
+                canMove = false;
+                break;
+            }
+        }
+
+        if (canMove)
+        {
+            rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
+            return true;
+        }
+        return false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("Collision detected with: " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
             TakeDamage(2); // Ejemplo de daño constante al colisionar con un enemigo
+        }
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Maplimit"))
+        {
+            // Manejar colisión con el límite del mapa
+        }
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("colisionobjects"))
+        {
+            // Manejar colisión con el Tilemap
+            Debug.Log("Collision with Tilemap detected");
         }
     }
 }
