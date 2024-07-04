@@ -121,8 +121,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.009439857, y: -0.0008990904}
-  m_Size: {x: 0.33532205, y: 0.21934247}
+  m_Offset: {x: 0.0010916889, y: -0.0008990916}
+  m_Size: {x: 0.35638618, y: 0.2193434}
   m_Direction: 1
 --- !u!50 &4275602696479384140
 Rigidbody2D:
@@ -198,6 +198,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objetivo: {fileID: 826186039822494921, guid: f1c981b12a179564199113c3778d9570, type: 3}
-  speed: 0.6
+  speed: 0.4
   debePerseguir: 1
   distancia: 0.5
