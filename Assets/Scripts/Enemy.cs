@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     private slime_admin slimeAdmin; //referencia al script 
     public void Attack(PlayerController player)
     {
-        player.TakeDamage(2); // Inflige 10 puntos de daño
+        player.TakeDamage(5); // Inflige 10 puntos de daño
     }
 
     public float Health

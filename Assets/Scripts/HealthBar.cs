@@ -1,17 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class HealthBar : MonoBehaviour
 {
-    public Image healthBarFill; // Asegúrate de que esta línea esté presente y sea pública
+    public Slider slider; // Referencia al slider de la barra de salud
 
-    public void SetHealth(float initialHealthPercentage)
+    public void SetMaxHealth(float maxHealth)
     {
-        Debug.Log("SetHealth called with percentage: " + initialHealthPercentage);
-        healthBarFill.fillAmount = initialHealthPercentage;
+        slider.maxValue = maxHealth;
+        slider.value = maxHealth;
     }
-    
 
-    
+    public void SetHealth(float health)
+    {
+        slider.value = health * slider.maxValue;
+    }
 }
+
+
 
