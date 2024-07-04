@@ -17,23 +17,12 @@ public class PlayerController : MonoBehaviour
     public HealthBar healthBar;
     public float initialHealth = 100f;
 
-
     Vector2 movementInput;
-
     SpriteRenderer spriteRenderer;
-
     Rigidbody2D rb;
-
     Animator animator;
-
     List<RaycastHit2D> castCollsions = new List<RaycastHit2D>();
-
     bool canMove = true;
-
-   
-
-
-
 
     public void TakeDamage(float damage)
     {
@@ -47,16 +36,12 @@ public class PlayerController : MonoBehaviour
         healthBar.SetHealth(initialHealth / 100.0f); // Asumiendo que la salud máxima es 100
     }
 
-
-
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
-
 
     private void FixedUpdate()
     {
@@ -86,14 +71,11 @@ public class PlayerController : MonoBehaviour
             if (movementInput.x < 0)
             {
                 spriteRenderer.flipX = true;
-
             }
             else if (movementInput.x > 0)
             {
                 spriteRenderer.flipX = false;
-
             }
-
         }
 
         if (initialHealth <= 0)
@@ -118,20 +100,6 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    //public bool TryMove(Vector2 direction)
-    //{
-    //    int count = rb.Cast(
-    //    direction,
-    //    movementFilter,
-    //    castCollsions,
-    //    Speed * Time.fixedDeltaTime + collisionOffset);
-
-
-    //    rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
-    //    return true;
-
-    //}
-
     void OnMove(InputValue movementValue)
     {
         movementInput = movementValue.Get<Vector2>();
@@ -153,14 +121,11 @@ public class PlayerController : MonoBehaviour
         {
             swordAttack.AttackRight();
         }
-
-
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Trigger detected with: " + collision.gameObject.name);
+        Debug.Log("Collision detected with: " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
@@ -168,8 +133,6 @@ public class PlayerController : MonoBehaviour
             if (enemy != null)
             {
                 Debug.Log("Enemy detected: " + enemy.name);
-
-
             }
         }
     }
@@ -208,8 +171,6 @@ public class PlayerController : MonoBehaviour
             health = initialHealth;
         }
     }
-
-
 
     private void Die()
     {

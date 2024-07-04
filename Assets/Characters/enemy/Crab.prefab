@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4275602696479384140}
   - component: {fileID: 4621775618666079641}
   - component: {fileID: 3418103157701258546}
-  - component: {fileID: 8035412614177892604}
+  - component: {fileID: 1217690487874538165}
   m_Layer: 4
   m_Name: Crab
   m_TagString: Enemy
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 9
---- !u!114 &8035412614177892604
+--- !u!114 &1217690487874538165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4907943723373614736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e365eb28028a14049b6d9826aad45ede, type: 3}
+  m_Script: {fileID: 11500000, guid: 21ee1f3821d14a64b89684f74ba57e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   objetivo: {fileID: 826186039822494921, guid: f1c981b12a179564199113c3778d9570, type: 3}

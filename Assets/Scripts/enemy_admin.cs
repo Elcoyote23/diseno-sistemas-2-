@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class slime_admin : MonoBehaviour
+public class enemy_admin : MonoBehaviour
 {
     public Transform objetivo;
     public float speed;
