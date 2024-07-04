@@ -105,16 +105,32 @@ public class PlayerController : MonoBehaviour
     public bool TryMove(Vector2 direction)
     {
         int count = rb.Cast(
-        direction,
-        movementFilter,
-        castCollsions,
-        Speed * Time.fixedDeltaTime + collisionOffset);
+            direction,
+            movementFilter,
+            castCollsions,
+            Speed * Time.fixedDeltaTime + collisionOffset);
 
-
-        rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
-        return true;
-
+        if (count == 0) // **Modificación: Verificar si no hay colisiones**
+        {
+            rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
+            return true;
+        }
+        return false;
     }
+
+    //public bool TryMove(Vector2 direction)
+    //{
+    //    int count = rb.Cast(
+    //    direction,
+    //    movementFilter,
+    //    castCollsions,
+    //    Speed * Time.fixedDeltaTime + collisionOffset);
+
+
+    //    rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
+    //    return true;
+
+    //}
 
     void OnMove(InputValue movementValue)
     {
