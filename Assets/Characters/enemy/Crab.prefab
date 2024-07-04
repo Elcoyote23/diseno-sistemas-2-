@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd00c09229157754298cdad08be13f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 6
+  health: 10
 --- !u!114 &8035412614177892604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,6 +198,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objetivo: {fileID: 826186039822494921, guid: f1c981b12a179564199113c3778d9570, type: 3}
-  speed: 0.3
+  speed: 0.2
   debePerseguir: 1
   distancia: 0.5

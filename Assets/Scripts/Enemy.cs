@@ -8,9 +8,11 @@ public class Enemy : MonoBehaviour
 
     Animator animator;
     private slime_admin slimeAdmin; //referencia al script 
+
+    private AudioSource audioSource;
     public void Attack(PlayerController player)
     {
-        player.TakeDamage(5); // Inflige 10 puntos de daño
+        player.TakeDamage(10); // Inflige 10 puntos de daño
     }
 
     public float Health
@@ -52,6 +54,8 @@ public class Enemy : MonoBehaviour
         if (slimeAdmin != null)
         {
             slimeAdmin.speed = 0; // Establecer la velocidad a 0
+
+
         }
 
     }

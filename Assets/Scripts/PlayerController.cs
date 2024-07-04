@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour
 
         // Detener el juego o reiniciar las hordas
         hordeManager.ResetHordes();
+
     }
 
     public void RestartGame()
