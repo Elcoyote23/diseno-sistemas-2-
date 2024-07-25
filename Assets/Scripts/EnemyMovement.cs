@@ -2,11 +2,28 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public float speed = 1.0f;
+    public float moveSpeed = 3f;
+    public Transform target;
 
-    void Update()
+    private Rigidbody2D rb;
+
+    private void Start()
     {
-        // Movimiento básico hacia adelante
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        rb = GetComponent<Rigidbody2D>();
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    private void FixedUpdate()
+    {
+        if (target != null)
+        {
+            Vector2 direction = (target.position - transform.position).normalized;
+            rb.velocity = direction * moveSpeed;
+        }
+    }
+
+    public void StopMovement()
+    {
+        rb.velocity = Vector2.zero;
     }
 }

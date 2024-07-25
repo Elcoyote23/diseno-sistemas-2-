@@ -1,11 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
 public class HealthBar : MonoBehaviour
 {
-    public Slider slider; // Referencia al slider de la barra de salud
+    public Slider slider;
 
     public void SetMaxHealth(float maxHealth)
     {
@@ -15,7 +13,7 @@ public class HealthBar : MonoBehaviour
 
     public void SetHealth(float health)
     {
-        slider.value = health * slider.maxValue;
+        slider.value = health;
     }
 }
 

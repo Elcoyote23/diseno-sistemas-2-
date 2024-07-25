@@ -1,70 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 public class Enemy : MonoBehaviour
 {
-
-    Animator animator;
-    private slime_admin slimeAdmin; //referencia al script 
-
+    private Animator animator;
+    private EnemyMovement enemyMovement;
     private AudioSource audioSource;
-    public void Attack(PlayerController player)
-    {
-        player.TakeDamage(10); // Inflige 10 puntos de daño
-    }
 
-    public float Health
-
-
-    {
-        set
-        {
-            health = value;
-            if (health <= 0)
-            {
-                Defeated();
-
-            }
-        }
-
-        get
-        {
-            return health;
-        }
-
-
-
-    }
-
-    public float health = 1;
+    public float maxHealth = 100f;
+    private float currentHealth;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
-        slimeAdmin = GetComponent<slime_admin>(); //obtengo la referencia de los componentes
+        enemyMovement = GetComponent<EnemyMovement>();
+        audioSource = GetComponent<AudioSource>();
+
+        currentHealth = maxHealth;
     }
 
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
 
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
 
-    public void Defeated()
+    private void Die()
     {
         animator.SetTrigger("Defeated");
-        if (slimeAdmin != null)
-        {
-            slimeAdmin.speed = 0; // Establecer la velocidad a 0
+        enemyMovement.StopMovement();
+        audioSource.Play();
 
-
-        }
-
+        Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
     }
-
-    public void OnDefeatedAnimation() 
-    {
-
-        Destroy(gameObject);
-    }
-
-
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4621775618666079641}
   - component: {fileID: 3418103157701258546}
   - component: {fileID: 8035412614177892604}
-  m_Layer: 4
+  m_Layer: 8
   m_Name: Orc
   m_TagString: Enemy
   m_Icon: {fileID: 0}
