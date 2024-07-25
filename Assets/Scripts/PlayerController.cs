@@ -180,6 +180,33 @@ public class PlayerController : MonoBehaviour
     //    return false;
     //}
 
+    //public bool TryMove(Vector2 direction)
+    //{
+    //    int count = rb.Cast(
+    //        direction,
+    //        movementFilter,
+    //        castCollisions,
+    //        Speed * Time.fixedDeltaTime + collisionOffset);
+
+    //    bool canMove = true;
+
+    //    foreach (var hit in castCollisions)
+    //    {
+    //        if (hit.collider.CompareTag("Wall"))
+    //        {
+    //            canMove = false;
+    //            break;
+    //        }
+    //    }
+
+    //    if (canMove)
+    //    {
+    //        rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
+    //        return true;
+    //    }
+    //    return false;
+    //}
+
     public bool TryMove(Vector2 direction)
     {
         int count = rb.Cast(
@@ -190,9 +217,11 @@ public class PlayerController : MonoBehaviour
 
         bool canMove = true;
 
+        // Verificar colisiones con etiquetas específicas
         foreach (var hit in castCollisions)
         {
-            if (hit.collider.CompareTag("Wall"))
+            // Bloquear el movimiento si choca con un objeto que tiene la etiqueta "Wall" o "EnemyBlock"
+            if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("EnemyBlock"))
             {
                 canMove = false;
                 break;

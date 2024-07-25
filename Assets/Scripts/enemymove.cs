@@ -13,15 +13,16 @@ public class enemymove : MonoBehaviour
     public GameObject target;
     public bool atacando;
 
-    
+    private Rigidbody2D rb;
+    private Vector2 movementDirection;
+
     void Start()
     {
         ani = GetComponent<Animator>();
         target = GameObject.Find("player");
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    
     void Update()
     {
         Comportamientos();
@@ -48,23 +49,49 @@ public class enemymove : MonoBehaviour
                 break;
 
             case 2:
- 
-                switch (direccion)
-                {
-                    case 0:
-                        transform.rotation = Quaternion.Euler(0, 0, 0);
-                        transform.Translate(Vector3.right * speed_walk * Time.deltaTime);
-                        break;
-
-                    case 1:
-                        transform.rotation = Quaternion.Euler(0, 180, 0);
-                        transform.Translate(Vector3.right * speed_walk * Time.deltaTime);
-                        break;
-
-                }
+                DetermineMovement();
                 ani.SetBool("walk", true);
                 break;
         }
     }
 
+    private void DetermineMovement()
+    {
+        Vector2 targetPosition = target.transform.position;
+        Vector2 directionToPlayer = (targetPosition - rb.position).normalized;
+
+        // Verificar colisiones con obstáculos
+        RaycastHit2D hit = Physics2D.Raycast(rb.position, directionToPlayer, speed_walk * Time.deltaTime);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.CompareTag("EnemyBlock")) // Cambia "EnemyBlock" por la etiqueta que uses
+            {
+                // Intentar rodear el obstáculo
+                if (directionToPlayer.x != 0)
+                {
+                    // Moverse verticalmente si hay un obstáculo horizontal
+                    movementDirection = new Vector2(0, directionToPlayer.y > 0 ? 1 : -1);
+                }
+                else
+                {
+                    // Moverse horizontalmente si hay un obstáculo vertical
+                    movementDirection = new Vector2(directionToPlayer.x > 0 ? 1 : -1, 0);
+                }
+            }
+            else
+            {
+                // Si no hay obstáculos, moverse hacia el jugador
+                movementDirection = directionToPlayer;
+            }
+        }
+        else
+        {
+            // Si no hay colisiones, moverse hacia el jugador
+            movementDirection = directionToPlayer;
+        }
+
+        // Mover al enemigo
+        rb.MovePosition(rb.position + movementDirection * speed_walk * Time.deltaTime);
+    }
 }
