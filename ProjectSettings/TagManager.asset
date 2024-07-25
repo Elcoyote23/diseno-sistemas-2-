@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Wall
+  - EnemyBlock
   layers:
   - Default
   - TransparentFX
@@ -13,11 +14,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - MapLimit
+  - colisionobjects
+  - Enemy
+  - EnemyBlock
+  - Limites
   - 
   - 
   - 
