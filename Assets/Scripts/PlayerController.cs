@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public SwordAttack swordAttack;
     public float initialHealth = 100f;
     private float health;
+    private float originalSpeed; // Para almacenar la velocidad original
+    private float lastDamageTime; // Para controlar el intervalo de daño
 
     Vector2 movementInput;
     SpriteRenderer spriteRenderer;
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         health = initialHealth;
         healthBar.SetMaxHealth(initialHealth);
+        originalSpeed = Speed; // Almacenar la velocidad original
     }
 
     private void FixedUpdate()
@@ -75,10 +78,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(int damageAmount)
     {
         health -= damageAmount;
         healthBar.SetHealth(health / initialHealth);
+        Debug.Log("Daño recibido por PlayerController");
 
         if (health <= 0)
         {
@@ -96,20 +100,22 @@ public class PlayerController : MonoBehaviour
         canMove = true;
     }
 
-    public void IncreaseSpeed(float amount)
+    public void IncreaseSpeed(float percentage)
     {
-        Speed += amount;
+        Speed += Speed * (percentage / 100f);
+        originalSpeed = Speed; // Actualizar la velocidad original
     }
 
-    public void IncreaseDamage(float amount)
+    public void IncreaseDamage(float percentage)
     {
-        damage += amount;
+        damage += damage * (percentage / 100f);
     }
 
-    public void IncreaseHealth(int amount)
+    public void IncreaseHealth(float percentage)
     {
-        initialHealth += amount;
-        health += amount;
+        float increaseAmount = initialHealth * (percentage / 100f);
+        initialHealth += increaseAmount;
+        health += increaseAmount;
         healthBar.SetMaxHealth(initialHealth);
         healthBar.SetHealth(health / initialHealth);
     }
@@ -164,49 +170,6 @@ public class PlayerController : MonoBehaviour
         swordAttack.StopAttack();
     }
 
-    //public bool TryMove(Vector2 direction)
-    //{
-    //    int count = rb.Cast(
-    //        direction,
-    //        movementFilter,
-    //        castCollisions,
-    //        Speed * Time.fixedDeltaTime + collisionOffset);
-
-    //    if (count == 0) // Verificar si no hay colisiones
-    //    {
-    //        rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
-    //        return true;
-    //    }
-    //    return false;
-    //}
-
-    //public bool TryMove(Vector2 direction)
-    //{
-    //    int count = rb.Cast(
-    //        direction,
-    //        movementFilter,
-    //        castCollisions,
-    //        Speed * Time.fixedDeltaTime + collisionOffset);
-
-    //    bool canMove = true;
-
-    //    foreach (var hit in castCollisions)
-    //    {
-    //        if (hit.collider.CompareTag("Wall"))
-    //        {
-    //            canMove = false;
-    //            break;
-    //        }
-    //    }
-
-    //    if (canMove)
-    //    {
-    //        rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
-    //        return true;
-    //    }
-    //    return false;
-    //}
-
     public bool TryMove(Vector2 direction)
     {
         int count = rb.Cast(
@@ -217,10 +180,8 @@ public class PlayerController : MonoBehaviour
 
         bool canMove = true;
 
-        // Verificar colisiones con etiquetas específicas
         foreach (var hit in castCollisions)
         {
-            // Bloquear el movimiento si choca con un objeto que tiene la etiqueta "Wall" o "EnemyBlock"
             if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("EnemyBlock"))
             {
                 canMove = false;
@@ -242,16 +203,26 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            TakeDamage(2); // Ejemplo de daño constante al colisionar con un enemigo
+            if (Time.time - lastDamageTime > 1f) // Intervalo de 1 segundo
+            {
+                TakeDamage(2); // Ejemplo de daño constante al colisionar con un enemigo
+                lastDamageTime = Time.time;
+            }
+            Speed *= 0.2f; // Reduce la velocidad del jugador al 80%
         }
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Maplimit"))
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            // Manejar colisión con el límite del mapa
+            Speed = originalSpeed; // Restaurar la velocidad original del jugador
         }
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("colisionobjects"))
-        {
-            // Manejar colisión con el Tilemap
-            Debug.Log("Collision with Tilemap detected");
-        }
+    }
+
+    public IEnumerator RestoreSpeed()
+    {
+        yield return new WaitForSeconds(1f);
+        Speed = originalSpeed; // Restaura la velocidad del jugador
     }
 }

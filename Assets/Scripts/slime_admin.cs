@@ -6,21 +6,25 @@ public class slime_admin : MonoBehaviour
 {
     public Transform objetivo;
     public float speed;
+    public bool debePerseguir;
+    public float distancia;
 
+    private Rigidbody2D rb;
     private Vector2 movementDirection;
 
     void Start()
     {
         objetivo = GameObject.Find("player").GetComponent<Transform>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
         Vector2 targetPosition = objetivo.position;
-        Vector2 directionToPlayer = (targetPosition - (Vector2)transform.position).normalized;
+        Vector2 directionToPlayer = (targetPosition - rb.position).normalized;
 
         // Verificar colisiones con obstáculos
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, speed * Time.deltaTime);
+        RaycastHit2D hit = Physics2D.Raycast(rb.position, directionToPlayer, speed * Time.deltaTime);
 
         if (hit.collider != null)
         {
@@ -51,6 +55,6 @@ public class slime_admin : MonoBehaviour
         }
 
         // Mover al enemigo
-        transform.Translate(movementDirection * speed * Time.deltaTime);
+        rb.MovePosition(rb.position + movementDirection * speed * Time.deltaTime);
     }
 }

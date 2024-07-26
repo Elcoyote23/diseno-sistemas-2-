@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4621775618666079641}
   - component: {fileID: 3418103157701258546}
   - component: {fileID: 8035412614177892604}
-  m_Layer: 4
+  m_Layer: 10
   m_Name: Crab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd00c09229157754298cdad08be13f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 2
   health: 12
 --- !u!114 &8035412614177892604
 MonoBehaviour:

@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: -8567331440521715128}
   - component: {fileID: 4275602696479384140}
   - component: {fileID: 4621775618666079641}
-  - component: {fileID: 3418103157701258546}
-  - component: {fileID: 8035412614177892604}
-  m_Layer: 4
+  - component: {fileID: 14653717926511804}
+  - component: {fileID: 273210190584842832}
+  - component: {fileID: -7888432418857232908}
+  m_Layer: 10
   m_Name: Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2111796920, guid: 06aa2216ca274e4439f495f0ea930f52, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -132,14 +133,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4907943723373614736}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.0001
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -150,7 +151,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &4621775618666079641
 Animator:
   serializedVersion: 5
@@ -172,7 +173,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3418103157701258546
+--- !u!114 &14653717926511804
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,8 +185,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd00c09229157754298cdad08be13f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 2
   health: 1
---- !u!114 &8035412614177892604
+--- !u!114 &273210190584842832
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,8 +196,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 4907943723373614736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e365eb28028a14049b6d9826aad45ede, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e555a6d3427a554cbf753f363bc8ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   objetivo: {fileID: 826186039822494921, guid: f1c981b12a179564199113c3778d9570, type: 3}
-  speed: 0.6
+  speed: 2
+  distancia: 1
+--- !u!195 &-7888432418857232908
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4907943723373614736}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.1
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.12
+  m_BaseOffset: 0.06
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
