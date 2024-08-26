@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 4621775618666079641}
   - component: {fileID: 14653717926511804}
   - component: {fileID: 273210190584842832}
-  - component: {fileID: -7888432418857232908}
+  - component: {fileID: 7635838588688350554}
+  - component: {fileID: -6158431058579815471}
   m_Layer: 10
   m_Name: Slime
   m_TagString: Enemy
@@ -194,7 +195,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4907943723373614736}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e555a6d3427a554cbf753f363bc8ab5, type: 3}
   m_Name: 
@@ -202,7 +203,20 @@ MonoBehaviour:
   objetivo: {fileID: 826186039822494921, guid: f1c981b12a179564199113c3778d9570, type: 3}
   speed: 2
   distancia: 1
---- !u!195 &-7888432418857232908
+--- !u!114 &7635838588688350554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4907943723373614736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6249db241c54d0d46b6db3ee286b18d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objetivo: {fileID: 826186039822494921, guid: f1c981b12a179564199113c3778d9570, type: 3}
+--- !u!195 &-6158431058579815471
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
