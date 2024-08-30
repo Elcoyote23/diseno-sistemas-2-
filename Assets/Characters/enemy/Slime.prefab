@@ -123,8 +123,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.16, y: 0.12}
+  m_Offset: {x: -0.0021443963, y: -0.0042887926}
+  m_Size: {x: 0.92770755, y: 0.92770755}
   m_Direction: 0
 --- !u!50 &4275602696479384140
 Rigidbody2D:
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  health: 1
+  health: 3
 --- !u!114 &273210190584842832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,8 +201,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objetivo: {fileID: 826186039822494921, guid: f1c981b12a179564199113c3778d9570, type: 3}
-  speed: 2
-  distancia: 1
+  speed: 10
+  distancia: 10
 --- !u!114 &7635838588688350554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,7 +226,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.1
-  m_Speed: 3.5
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
