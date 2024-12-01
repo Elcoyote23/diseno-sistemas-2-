@@ -5,20 +5,20 @@ using UnityEngine.AI;
 
 public class NavigatorEnemy : MonoBehaviour
 {
-    [SerializeField] private Transform objetivo;
+    [SerializeField] public Transform objetivo;
 
-    private NavMeshAgent navMeshAgent;
+    NavMeshAgent agent;
 
-    private void Start()
+    public void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.updateRotation = false;
-        navMeshAgent.updateUpAxis = false;
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
     }
 
-    private void Update()
+    public void Update()
     {
-        navMeshAgent.SetDestination(objetivo.position);
+        agent.SetDestination(objetivo.position);
     }
 
 }
