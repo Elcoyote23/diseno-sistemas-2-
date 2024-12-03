@@ -1,7 +1,7 @@
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class HordeManager : MonoBehaviour
 {
@@ -15,7 +15,13 @@ public class HordeManager : MonoBehaviour
     public Text hordeMessage; // Referencia al texto de la UI
     public GameObject selectionPanel; // Panel de selección
     public PlayerController player; // Referencia al controlador del jugador
-    public float speedIncreaseAmount = 1.0f; // Cantidad de incremento de velocidad
+
+    // Variables para botones
+    public Button speedButton;
+    public Button damageButton;
+    public Button healthButton;
+
+    public int speedIncreaseAmount = 1; // Cantidad de incremento de velocidad
     public int damageIncreaseAmount = 5; // Cantidad de incremento de daño
     public int healthIncreaseAmount = 20; // Cantidad de incremento de vida
 
@@ -27,6 +33,35 @@ public class HordeManager : MonoBehaviour
     void Start()
     {
         enemiesPerHorde = initialEnemiesPerHorde;
+
+        // Cargar el estado del juego si se está continuando desde una escena anterior
+        if (GameManager.Instance != null)
+        {
+            currentHorde = GameManager.Instance.currentHorde;
+            enemiesPerHorde = GameManager.Instance.enemiesPerHorde;
+        }
+
+        selectionPanel.SetActive(false); // Panel comienza inactivo
+
+        // Configuración de botones
+        speedButton.onClick.AddListener(() =>
+        {
+            player.IncreaseSpeed(speedIncreaseAmount);
+            selectionPanel.SetActive(false); // Cerrar panel
+        });
+
+        damageButton.onClick.AddListener(() =>
+        {
+            player.IncreaseDamage(damageIncreaseAmount);
+            selectionPanel.SetActive(false); // Cerrar panel
+        });
+
+        healthButton.onClick.AddListener(() =>
+        {
+            player.IncreaseHealth(healthIncreaseAmount);
+            selectionPanel.SetActive(false); // Cerrar panel
+        });
+
         hordeCoroutine = StartCoroutine(SpawnHorde());
     }
 
@@ -34,8 +69,6 @@ public class HordeManager : MonoBehaviour
     {
         while (gameRunning)
         {
-            float currentSpeed = 1.0f; // Velocidad base de los enemigos (puedes ajustar esto según tus necesidades)
-
             // Mostrar mensaje de inicio de horda
             hordeMessage.text = "Horda " + (currentHorde + 1) + " comenzando...";
 
@@ -44,18 +77,18 @@ public class HordeManager : MonoBehaviour
             int totalEnemies = enemiesPerHorde;
             while (totalEnemies > 0)
             {
-                // Spawn base enemies
+                // Spawn enemigos básicos
                 SpawnEnemy(enemyPrefab);
                 totalEnemies--;
 
-                // Spawn type 2 enemies starting from horde 3
+                // Spawn enemigos tipo 2 a partir de la horda 3
                 if (currentHorde >= 3 && totalEnemies > 0)
                 {
                     SpawnEnemy(enemyType2Prefab);
                     totalEnemies--;
                 }
 
-                // Spawn type 3 enemies starting from horde 5
+                // Spawn enemigos tipo 3 a partir de la horda 5
                 if (currentHorde >= 5 && totalEnemies > 0)
                 {
                     SpawnEnemy(enemyType3Prefab);
@@ -65,97 +98,88 @@ public class HordeManager : MonoBehaviour
                 yield return new WaitForSeconds(spawnInterval);
             }
 
+
             currentHorde++;
-            enemiesPerHorde *= 2; // Multiplicar la cantidad de enemigos por 2 para la próxima horda
+            enemiesPerHorde *= 2; // Multiplicar la cantidad de enemigos para la próxima horda
+
+            // Guardar el estado del juego
+            SaveGameData();
+
+            // Mostrar opciones de mejora
+            yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Enemy").Length == 0); // Espera a que no haya enemigos
+
+            // Mostrar opciones de mejora después de 2 segundos
+            yield return new WaitForSeconds(2.0f);
+            selectionPanel.SetActive(true);
+            hordeMessage.text = "Selecciona una mejora antes de la próxima horda";
 
             yield return new WaitForSeconds(pauseBetweenHordes); // Pausa entre hordas
 
-            // Verificar si quedan enemigos
-            yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("Enemy").Length == 0);
-
-            // Mostrar pantalla de selección
-            ShowSelectionPanel();
-            yield return new WaitUntil(() => selectionPanel.activeSelf == false); // Esperar hasta que el jugador haga una elección
-
-            hordeMessage.text = ""; // Limpiar mensaje después de la pausa
+            // Cambiar de escena si aplica
+            if (currentHorde >= 3)
+            {
+                ChangeScene("LEVEL2");
+                yield break; // Salir del ciclo para evitar conflictos en la nueva escena
+            }
         }
+        
     }
 
     private void SpawnEnemy(GameObject enemyPrefab)
     {
-        int spawnIndex = Random.Range(0, spawnPoints.Length);
-        GameObject enemy = Instantiate(enemyPrefab, spawnPoints[spawnIndex].position, spawnPoints[spawnIndex].rotation);
-        enemy.tag = "Enemy"; // Asignar etiqueta "Enemy" a cada enemigo instanciado
+        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 
-    private void ShowSelectionPanel()
+    public void SaveGameData()
     {
-        PauseGame(); // Pausar el juego
-        selectionPanel.SetActive(true);
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.currentHorde = currentHorde;
+            GameManager.Instance.enemiesPerHorde = enemiesPerHorde;
+
+            if (player != null)
+            {
+                GameManager.Instance.SavePlayerData(player);
+            }
+            else
+            {
+                Debug.LogError("El objeto player no está asignado en HordeManager.");
+            }
+        }
+        else
+        {
+            Debug.LogError("GameManager.Instance no está disponible.");
+        }
     }
 
-    public void OnIncreaseSpeedButton()
+    public void ChangeScene(string sceneName)
     {
-        player.IncreaseSpeed(speedIncreaseAmount);
-        ResumeGame(); // Reanudar el juego
-        selectionPanel.SetActive(false);
-    }
-
-    public void OnIncreaseDamageButton()
-    {
-        player.IncreaseDamage(damageIncreaseAmount);
-        ResumeGame(); // Reanudar el juego
-        selectionPanel.SetActive(false);
-    }
-
-    public void OnIncreaseHealthButton()
-    {
-        player.IncreaseHealth(healthIncreaseAmount);
-        ResumeGame(); // Reanudar el juego
-        selectionPanel.SetActive(false);
+        SaveGameData();
+        SceneManager.LoadScene(sceneName);
     }
 
     public void ResetHordes()
     {
-        gameRunning = false; // Detener la generación de hordas
-        if (hordeCoroutine != null)
-        {
-            StopCoroutine(hordeCoroutine);
-        }
         currentHorde = 0;
         enemiesPerHorde = initialEnemiesPerHorde;
 
-        // Eliminar todos los enemigos existentes
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        StopCoroutine(hordeCoroutine);
+
+        // Reinicia la escena al nivel inicial
+        if (SceneManager.GetActiveScene().name != "LEVEL1")
         {
-            Destroy(enemy);
+            ChangeScene("LEVEL1");
+        }
+        else
+        {
+            hordeCoroutine = StartCoroutine(SpawnHorde());
         }
     }
-
     public void RestartHordeCoroutine()
     {
-        gameRunning = true;
+        // Reiniciar la coroutine si el jugador reinicia el juego
+        StopCoroutine(hordeCoroutine);
         hordeCoroutine = StartCoroutine(SpawnHorde());
     }
-
-    private void PauseGame()
-    {
-        Time.timeScale = 0f; // Pausar el tiempo del juego
-        player.enabled = false; // Deshabilitar el movimiento del jugador
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
-            enemy.GetComponent<Enemy>().enabled = false; // Deshabilitar los scripts de los enemigos
-        }
-    }
-
-    private void ResumeGame()
-    {
-        Time.timeScale = 1f; // Reanudar el tiempo del juego
-        player.enabled = true; // Habilitar el movimiento del jugador
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
-            enemy.GetComponent<Enemy>().enabled = true; // Habilitar los scripts de los enemigos
-        }
-    }
 }
-

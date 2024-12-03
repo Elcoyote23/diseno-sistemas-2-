@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     public ContactFilter2D movementFilter;
     public SwordAttack swordAttack;
     public float initialHealth = 100f;
-    private float health;
+    public float health;
+
 
     Vector2 movementInput;
     SpriteRenderer spriteRenderer;
@@ -30,9 +31,21 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        health = initialHealth;
+
+        // Cargar los datos del jugador desde GameManager
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.LoadPlayerData(this);
+        }
+        else
+        {
+            health = initialHealth;
+        }
+
         healthBar.SetMaxHealth(initialHealth);
+        healthBar.SetHealth(health / initialHealth);
     }
+
 
     private void FixedUpdate()
     {
@@ -164,6 +177,7 @@ public class PlayerController : MonoBehaviour
         swordAttack.StopAttack();
     }
 
+<<<<<<< Updated upstream
     //public bool TryMove(Vector2 direction)
     //{
     //    int count = rb.Cast(
@@ -207,6 +221,8 @@ public class PlayerController : MonoBehaviour
     //    return false;
     //}
 
+=======
+>>>>>>> Stashed changes
     public bool TryMove(Vector2 direction)
     {
         int count = rb.Cast(
