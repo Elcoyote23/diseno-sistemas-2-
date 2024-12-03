@@ -177,52 +177,7 @@ public class PlayerController : MonoBehaviour
         swordAttack.StopAttack();
     }
 
-<<<<<<< Updated upstream
-    //public bool TryMove(Vector2 direction)
-    //{
-    //    int count = rb.Cast(
-    //        direction,
-    //        movementFilter,
-    //        castCollisions,
-    //        Speed * Time.fixedDeltaTime + collisionOffset);
 
-    //    if (count == 0) // Verificar si no hay colisiones
-    //    {
-    //        rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
-    //        return true;
-    //    }
-    //    return false;
-    //}
-
-    //public bool TryMove(Vector2 direction)
-    //{
-    //    int count = rb.Cast(
-    //        direction,
-    //        movementFilter,
-    //        castCollisions,
-    //        Speed * Time.fixedDeltaTime + collisionOffset);
-
-    //    bool canMove = true;
-
-    //    foreach (var hit in castCollisions)
-    //    {
-    //        if (hit.collider.CompareTag("Wall"))
-    //        {
-    //            canMove = false;
-    //            break;
-    //        }
-    //    }
-
-    //    if (canMove)
-    //    {
-    //        rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
-    //        return true;
-    //    }
-    //    return false;
-    //}
-
-=======
->>>>>>> Stashed changes
     public bool TryMove(Vector2 direction)
     {
         int count = rb.Cast(
@@ -231,26 +186,16 @@ public class PlayerController : MonoBehaviour
             castCollisions,
             Speed * Time.fixedDeltaTime + collisionOffset);
 
-        bool canMove = true;
-
-        // Verificar colisiones con etiquetas específicas
-        foreach (var hit in castCollisions)
-        {
-            // Bloquear el movimiento si choca con un objeto que tiene la etiqueta "Wall" o "EnemyBlock"
-            if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("EnemyBlock"))
-            {
-                canMove = false;
-                break;
-            }
-        }
-
-        if (canMove)
+        if (count == 0) // Verificar si no hay colisiones
         {
             rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
             return true;
         }
         return false;
     }
+
+   
+   
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
