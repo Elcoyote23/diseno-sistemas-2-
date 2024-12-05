@@ -1002,7 +1002,7 @@ MonoBehaviour:
   currentHorde: 0
   playerHealth: 100
   playerDamage: 0
-  playerSpeed: 0
+  playerSpeed: 1
   enemiesPerHorde: 2
 --- !u!4 &494398193
 Transform:
@@ -10938,6 +10938,38 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3639326267139517242, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3639326267139517242, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3639326267139517242, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_ActionId
+      value: 3f7cfd86-91e5-49d3-ab12-56980600aaa8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3639326267139517242, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_ActionName
+      value: Player/OnDash[/Keyboard/leftShift]
+      objectReference: {fileID: 0}
+    - target: {fileID: 3639326267139517242, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3639326267139517242, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3639326267139517242, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 11500000, guid: 5b4e932adf7ceb44881fc91e683c9927, type: 3}
+    - target: {fileID: 3639326267139517242, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4076466146976896485, guid: f1c981b12a179564199113c3778d9570, type: 3}
       propertyPath: m_SortingOrder
       value: 3
@@ -10962,6 +10994,10 @@ PrefabInstance:
       propertyPath: hordeManager
       value: 
       objectReference: {fileID: 638391879}
+    - target: {fileID: 5732351338817436994, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: trailRenderer
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6088946639655190452, guid: f1c981b12a179564199113c3778d9570, type: 3}
       propertyPath: m_Name
       value: player
@@ -10973,6 +11009,14 @@ PrefabInstance:
     - target: {fileID: 7126355846603225649, guid: f1c981b12a179564199113c3778d9570, type: 3}
       propertyPath: m_BodyType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7126355846603225649, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7126355846603225649, guid: f1c981b12a179564199113c3778d9570, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7126355846603225649, guid: f1c981b12a179564199113c3778d9570, type: 3}
       propertyPath: m_UseFullKinematicContacts

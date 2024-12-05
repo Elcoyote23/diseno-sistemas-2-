@@ -206,7 +206,71 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c16f194d-f148-4a22-85ee-cf817f4e8353
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9961f106-a778-4ad8-aa67-752fd021e386
+    m_ActionName: Player/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4ec369e3-b47e-4ae9-b92f-c0e75adcf0e1
+    m_ActionName: Player/Fire[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 02308298-a5e9-489b-a2f9-4459c7f10da7
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 03bf0558-e0a2-45e6-808b-3b79b4bab074
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 47df2638-3bef-470a-abd7-8cb88d90f39d
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1a96c5fb-4a76-4242-98e9-b997bca40c61
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 30698d84-eddd-4686-879c-44fb60d8c569
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e0916396-657b-4616-80a0-adf931851c41
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2c9a5589-4463-4eec-82c5-7491136273e0
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8502f2d9-cadb-44c1-bf85-f0b6f0913a73
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3246503b-08a9-4368-a78a-8aa8c88742c1
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ef0f1785-e24e-4dce-8297-ed7b080c7595
+    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -296,8 +360,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4e932adf7ceb44881fc91e683c9927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  Speed: 1
   collisionOffset: 0.05
+  damage: 10
+  defeatPanel: {fileID: 0}
+  hordeManager: {fileID: 0}
   movementFilter:
     useTriggers: 0
     useLayerMask: 0
@@ -313,6 +380,13 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   swordAttack: {fileID: 0}
+  initialHealth: 100
+  health: 0
+  dashPower: 15
+  dashDuration: 0.2
+  dashCooldown: 1
+  trailRenderer: {fileID: 0}
+  healthBar: {fileID: 0}
 --- !u!95 &2267940765661701942
 Animator:
   serializedVersion: 5

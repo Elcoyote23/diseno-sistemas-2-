@@ -167,9 +167,9 @@ public class HordeManager : MonoBehaviour
         StopCoroutine(hordeCoroutine);
 
         // Reinicia la escena al nivel inicial
-        if (SceneManager.GetActiveScene().name != "LEVEL1")
+        if (SceneManager.GetActiveScene().name != "proye")
         {
-            ChangeScene("LEVEL1");
+            ChangeScene("proye");
         }
         else
         {

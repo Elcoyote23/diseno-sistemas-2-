@@ -24,6 +24,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "OnDash",
+                    "type": "Button",
+                    "id": "3f7cfd86-91e5-49d3-ab12-56980600aaa8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Fire",
                     "type": "Button",
                     "id": "4ec369e3-b47e-4ae9-b92f-c0e75adcf0e1",
@@ -251,6 +260,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a56bd24c-2dda-47b6-b4ea-378e1452b0e6",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "OnDash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

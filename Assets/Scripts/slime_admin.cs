@@ -22,35 +22,10 @@ public class slime_admin : MonoBehaviour
         // Verificar colisiones con obstáculos
         RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, speed * Time.deltaTime);
 
-        if (hit.collider != null)
-        {
-            if (hit.collider.CompareTag("EnemyBlock"))
-            {
-                // Intentar rodear el obstáculo
-                if (directionToPlayer.x != 0)
-                {
-                    // Moverse verticalmente si hay un obstáculo horizontal
-                    movementDirection = new Vector2(0, directionToPlayer.y > 0 ? 1 : -1);
-                }
-                else
-                {
-                    // Moverse horizontalmente si hay un obstáculo vertical
-                    movementDirection = new Vector2(directionToPlayer.x > 0 ? 1 : -1, 0);
-                }
-            }
-            else
-            {
-                // Si no hay obstáculos, moverse hacia el jugador
-                movementDirection = directionToPlayer;
-            }
-        }
-        else
-        {
-            // Si no hay colisiones, moverse hacia el jugador
-            movementDirection = directionToPlayer;
-        }
+        
 
         // Mover al enemigo
         transform.Translate(movementDirection * speed * Time.deltaTime);
+        movementDirection = directionToPlayer;
     }
 }

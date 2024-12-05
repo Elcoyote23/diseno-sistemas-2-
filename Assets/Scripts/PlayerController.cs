@@ -194,8 +194,8 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-   
-   
+
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

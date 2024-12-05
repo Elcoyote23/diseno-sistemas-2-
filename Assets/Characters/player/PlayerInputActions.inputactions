@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "OnDash",
+                    "type": "Button",
+                    "id": "ed8672b6-bdc9-4c29-8cde-d459894f8552",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Look",
                     "type": "Value",
                     "id": "b20011cd-7845-4648-8250-0afb067d0aa9",
@@ -271,6 +280,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8ce8da5d-d127-4b3b-a22d-d6e2c13aa72d",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "OnDash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
