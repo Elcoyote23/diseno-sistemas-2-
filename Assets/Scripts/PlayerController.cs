@@ -9,13 +9,12 @@ public class PlayerController : MonoBehaviour
     public float Speed = 1f;
     public float collisionOffset = 0.05f;
     public float damage = 10f;
-    public GameObject defeatPanel; // Referencia al panel de derrota
-    public HordeManager hordeManager; // Referencia al HordeManager
+    public GameObject defeatPanel;
+    public HordeManager hordeManager;
     public ContactFilter2D movementFilter;
     public SwordAttack swordAttack;
     public float initialHealth = 100f;
     public float health;
-
 
     Vector2 movementInput;
     SpriteRenderer spriteRenderer;
@@ -24,7 +23,14 @@ public class PlayerController : MonoBehaviour
     List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
     bool canMove = true;
 
-    public HealthBar healthBar; // Asigna la HealthBar que actualiza la barra de vida visual
+    public HealthBar healthBar;
+
+    private bool canDash = true;
+    public float dashingPower = 5f;
+    public float dashingTime = 0.1f; // Aumentado para un dash más perceptible
+    public float dashingCooldown = 1f;
+
+    [SerializeField] private TrailRenderer tr;
 
     void Start()
     {
@@ -32,7 +38,6 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Cargar los datos del jugador desde GameManager
         if (GameManager.Instance != null)
         {
             GameManager.Instance.LoadPlayerData(this);
@@ -46,40 +51,54 @@ public class PlayerController : MonoBehaviour
         healthBar.SetHealth(health / initialHealth);
     }
 
+    private void Update()
+    {
+        if (!canMove)
+        {
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && canDash)
+        {
+            StartCoroutine(Dash());
+        }
+    }
 
     private void FixedUpdate()
     {
-        if (canMove)
+        if (!canMove)
         {
-            if (movementInput != Vector2.zero)
+            return;
+        }
+
+        if (movementInput != Vector2.zero)
+        {
+            bool success = TryMove(movementInput);
+
+            if (!success)
             {
-                bool success = TryMove(movementInput);
+                success = TryMove(new Vector2(movementInput.x, 0));
 
                 if (!success)
                 {
-                    success = TryMove(new Vector2(movementInput.x, 0));
-
-                    if (!success)
-                    {
-                        success = TryMove(new Vector2(0, movementInput.y));
-                    }
+                    success = TryMove(new Vector2(0, movementInput.y));
                 }
-
-                animator.SetBool("isMoving", success);
-            }
-            else
-            {
-                animator.SetBool("isMoving", false);
             }
 
-            if (movementInput.x < 0)
-            {
-                spriteRenderer.flipX = true;
-            }
-            else if (movementInput.x > 0)
-            {
-                spriteRenderer.flipX = false;
-            }
+            animator.SetBool("isMoving", success);
+        }
+        else
+        {
+            animator.SetBool("isMoving", false);
+            StopMovement(); // Detiene el movimiento cuando no hay entrada
+        }
+
+        if (movementInput.x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (movementInput.x > 0)
+        {
+            spriteRenderer.flipX = false;
         }
 
         if (health <= 0)
@@ -129,19 +148,16 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        // Mostrar la pantalla de derrota
         defeatPanel.SetActive(true);
-
-        // Detener el juego o reiniciar las hordas
         hordeManager.ResetHordes();
     }
 
     public void RestartGame()
     {
-        initialHealth = 100; // Restablecer la salud
-        Speed = 1.0f; // Restablecer la velocidad
-        damage = 10.0f; // Restablecer el daño
-        defeatPanel.SetActive(false); // Ocultar la pantalla de derrota
+        initialHealth = 100;
+        Speed = 1.0f;
+        damage = 10.0f;
+        defeatPanel.SetActive(false);
         hordeManager.RestartHordeCoroutine();
         health = initialHealth;
         healthBar.SetHealth(1f);
@@ -177,7 +193,6 @@ public class PlayerController : MonoBehaviour
         swordAttack.StopAttack();
     }
 
-
     public bool TryMove(Vector2 direction)
     {
         int count = rb.Cast(
@@ -186,16 +201,19 @@ public class PlayerController : MonoBehaviour
             castCollisions,
             Speed * Time.fixedDeltaTime + collisionOffset);
 
-        if (count == 0) // Verificar si no hay colisiones
+        if (count == 0)
         {
             rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
             return true;
         }
+
         return false;
     }
 
-
-
+    private void StopMovement()
+    {
+        rb.velocity = Vector2.zero; // Detiene el movimiento del jugador
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -203,7 +221,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            TakeDamage(2); // Ejemplo de daño constante al colisionar con un enemigo
+            TakeDamage(2);
         }
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Maplimit"))
         {
@@ -211,8 +229,34 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.layer == LayerMask.NameToLayer("colisionobjects"))
         {
-            // Manejar colisión con el Tilemap
             Debug.Log("Collision with Tilemap detected");
         }
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        canMove = false; // Bloquea el movimiento durante el dash
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+
+        // Calcula la dirección del dash basada en la entrada de movimiento
+        Vector2 dashDirection = movementInput.normalized;
+        if (dashDirection == Vector2.zero) // Si no hay dirección, se usa la dirección en la que está mirando
+        {
+            dashDirection = spriteRenderer.flipX ? Vector2.left : Vector2.right;
+        }
+
+        rb.velocity = dashDirection * dashingPower;
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        rb.gravityScale = originalGravity;
+
+        StopMovement(); // Detiene el movimiento al finalizar el dash
+
+        canMove = true;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
     }
 }
