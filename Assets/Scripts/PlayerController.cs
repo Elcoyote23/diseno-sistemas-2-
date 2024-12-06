@@ -27,10 +27,12 @@ public class PlayerController : MonoBehaviour
 
     private bool canDash = true;
     public float dashingPower = 5f;
-    public float dashingTime = 0.1f; // Aumentado para un dash más perceptible
-    public float dashingCooldown = 1f;
+    public float dashingTime = 0.1f;
+    public float dashingCooldown = 3f;
 
     [SerializeField] private TrailRenderer tr;
+
+    public Text cooldownText;
 
     void Start()
     {
@@ -49,6 +51,11 @@ public class PlayerController : MonoBehaviour
 
         healthBar.SetMaxHealth(initialHealth);
         healthBar.SetHealth(health / initialHealth);
+
+        if (cooldownText != null)
+        {
+            cooldownText.text = "Dash Ready";
+        }
     }
 
     private void Update()
@@ -60,6 +67,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && canDash)
         {
             StartCoroutine(Dash());
+        }
+
+        if (cooldownText != null && canDash)
+        {
+            cooldownText.text = "Dash Ready";
         }
     }
 
@@ -89,7 +101,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             animator.SetBool("isMoving", false);
-            StopMovement(); // Detiene el movimiento cuando no hay entrada
+            StopMovement();
         }
 
         if (movementInput.x < 0)
@@ -206,13 +218,12 @@ public class PlayerController : MonoBehaviour
             rb.MovePosition(rb.position + direction * Speed * Time.fixedDeltaTime);
             return true;
         }
-
         return false;
     }
 
     private void StopMovement()
     {
-        rb.velocity = Vector2.zero; // Detiene el movimiento del jugador
+        rb.velocity = Vector2.zero;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -236,27 +247,57 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Dash()
     {
         canDash = false;
-        canMove = false; // Bloquea el movimiento durante el dash
+        canMove = false;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
 
-        // Calcula la dirección del dash basada en la entrada de movimiento
         Vector2 dashDirection = movementInput.normalized;
-        if (dashDirection == Vector2.zero) // Si no hay dirección, se usa la dirección en la que está mirando
+        if (dashDirection == Vector2.zero)
         {
             dashDirection = spriteRenderer.flipX ? Vector2.left : Vector2.right;
         }
 
-        rb.velocity = dashDirection * dashingPower;
+        Vector2 originalPosition = rb.position;
+        Vector2 targetPosition = originalPosition + dashDirection * dashingPower;
+
         tr.emitting = true;
-        yield return new WaitForSeconds(dashingTime);
+        float elapsedTime = 0f;
+        while (elapsedTime < dashingTime)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(rb.position, dashDirection, dashingPower * Time.deltaTime, LayerMask.GetMask("Limit"));
+            if (hit.collider != null || (hit.collider != null && hit.collider.CompareTag("Limit")))
+            {
+                targetPosition = hit.point - dashDirection * 0.01f;
+                break;
+            }
+
+            rb.MovePosition(Vector2.Lerp(originalPosition, targetPosition, elapsedTime / dashingTime));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        rb.MovePosition(targetPosition);
+
         tr.emitting = false;
         rb.gravityScale = originalGravity;
-
-        StopMovement(); // Detiene el movimiento al finalizar el dash
-
+        StopMovement();
         canMove = true;
-        yield return new WaitForSeconds(dashingCooldown);
+
+        float cooldownTimer = dashingCooldown;
+        while (cooldownTimer > 0)
+        {
+            cooldownTimer -= Time.deltaTime;
+            if (cooldownText != null)
+            {
+                cooldownText.text = $"Dash Cooldown: {cooldownTimer:F1}";
+            }
+            yield return null;
+        }
+
+        if (cooldownText != null)
+        {
+            cooldownText.text = "Dash Ready";
+        }
         canDash = true;
     }
 }
